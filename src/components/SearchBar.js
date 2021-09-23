@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-const SearchBar = () => {
+const SearchBar = ({ onSearchSubmit }) => {
   const [term, setTerm] = useState('')
 
   const handleSearch = (e) => {
@@ -10,29 +10,27 @@ const SearchBar = () => {
   const onSubmitForm = (e) => {
     e.preventDefault()
 
-    // TODO: Call callback from parent component
+    onSearchSubmit(term)
   }
 
   return (
-    <>
-      <div className='ui segment search-bar'>
-        <form className='ui form' onSubmit={onSubmitForm}>
-          <div class='field ui right aligned category search'>
-            <label htmlFor='#search-bar'>Video Search</label>
-            <div class='ui icon input'>
-              <input
-                type='text'
-                id='search-bar'
-                value={term}
-                onChange={handleSearch}
-                placeholder='Video Search...'
-              />
-              <i class='search icon'></i>
-            </div>
+    <div className='ui segment search-bar'>
+      <form className='ui form' onSubmit={onSubmitForm}>
+        <div className='field ui right aligned category search'>
+          <label htmlFor='#search-bar'>Video Search</label>
+          <div className='ui icon input'>
+            <input
+              type='text'
+              id='search-bar'
+              value={term}
+              onChange={handleSearch}
+              placeholder='Video Search...'
+            />
+            <i className='search icon'></i>
           </div>
-        </form>
-      </div>
-    </>
+        </div>
+      </form>
+    </div>
   )
 }
 
