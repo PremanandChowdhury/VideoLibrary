@@ -5,11 +5,12 @@ import VideoList from './VideoList'
 
 const App = () => {
   const [videos, setVideos] = useState([])
+  const [selectedVideo, setSelectedVideo] = useState(null)
 
   /**
    * Here the youtube is:
    *  -> https://www.googleapis.com/youtube/v3
-   * 
+   *
    * Full URL will be
    *  -> https://www.googleapis.com/youtube/v3/search?q=term
    */
@@ -23,10 +24,12 @@ const App = () => {
     setVideos(response.data.items)
   }
 
+  const onSelectedVideo = (video) => console.log('From the App! ', video)
+
   return (
     <div className='ui container'>
       <SearchBar onSearchSubmit={onSearchSubmit} />
-      <VideoList videos={videos} />
+      <VideoList onSelectedVideo={onSelectedVideo} videos={videos} />
     </div>
   )
 }
