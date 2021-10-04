@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SearchBar from './SearchBar'
 import youtube from './apis/youtube'
 import VideoList from './VideoList'
+import VideoDetail from './VideoDetail'
 
 const App = () => {
   const [videos, setVideos] = useState([])
@@ -24,11 +25,15 @@ const App = () => {
     setVideos(response.data.items)
   }
 
-  const onSelectedVideo = (video) => console.log('From the App! ', video)
+  const onSelectedVideo = (video) => {
+    setSelectedVideo(video)
+    return video
+  }
 
   return (
     <div className='ui container'>
       <SearchBar onSearchSubmit={onSearchSubmit} />
+      <VideoDetail video={selectedVideo} />
       <VideoList onSelectedVideo={onSelectedVideo} videos={videos} />
     </div>
   )
