@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchBar from './SearchBar'
 import youtube from './apis/youtube'
 import VideoList from './VideoList'
@@ -7,6 +7,10 @@ import VideoDetail from './VideoDetail'
 const App = () => {
   const [videos, setVideos] = useState([])
   const [selectedVideo, setSelectedVideo] = useState(null)
+
+  useEffect(() => {
+    onSearchSubmit('tom and jerry')
+  }, [])
 
   /**
    * Here the youtube is:
@@ -23,6 +27,7 @@ const App = () => {
       },
     })
     setVideos(response.data.items)
+    setSelectedVideo(response.data.items[0])
   }
 
   const onSelectedVideo = (video) => {
