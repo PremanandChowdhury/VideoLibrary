@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from './SearchBar'
-import youtube from './apis/youtube'
 import VideoList from './VideoList'
 import VideoDetail from './VideoDetail'
+import useVideos from './hooks/useVideos'
 
 const App = () => {
-  const [videos, setVideos] = useState([])
   const [selectedVideo, setSelectedVideo] = useState(null)
+  const [videos, search] = useVideos('tom and jerry')
 
   useEffect(() => {
-    onSearchSubmit('tom and jerry')
-  }, [])
+    setSelectedVideo(videos[0])
+  }, [videos])
+
+  // setSelectedVideo(response.data.items[0])
 
   /**
    * Here the youtube is:
@@ -20,16 +22,6 @@ const App = () => {
    *  -> https://www.googleapis.com/youtube/v3/search?q=term
    */
 
-  const onSearchSubmit = async (term) => {
-    const response = await youtube.get('/search', {
-      params: {
-        q: term,
-      },
-    })
-    setVideos(response.data.items)
-    setSelectedVideo(response.data.items[0])
-  }
-
   // const onSelectedVideo = (video) => {
   //   setSelectedVideo(video)
   //   return video
@@ -37,7 +29,7 @@ const App = () => {
 
   return (
     <div className='ui container'>
-      <SearchBar onSearchSubmit={onSearchSubmit} />
+      <SearchBar onSearchSubmit={search} />
       <div className='ui grid'>
         <div className='ui row'>
           <div className='eleven wide column'>
